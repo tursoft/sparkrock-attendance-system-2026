@@ -1,10 +1,11 @@
 using AttendanceSystem.Domain.Schools;
+using AttendanceSystem.Infrastructure.Mapping;
 using AttendanceSystem.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace AttendanceSystem.Infrastructure.Repositories;
 
-public sealed class SchoolRepository(AttendanceDbContext db) : ISchoolRepository
+internal sealed class SchoolRepository(AttendanceDbContext db) : ISchoolRepository
 {
     public async Task<School?> GetAsync(int schoolId, CancellationToken cancellationToken)
     {
@@ -12,7 +13,6 @@ public sealed class SchoolRepository(AttendanceDbContext db) : ISchoolRepository
             .AsNoTracking()
             .Include(s => s.SchoolTerms)
             .SingleOrDefaultAsync(s => s.SchoolId == schoolId, cancellationToken);
-
-        return school is null ? null : SchoolMapper.ToDomain(school);
+        return school?.ToDomain();
     }
 }

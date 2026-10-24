@@ -275,6 +275,8 @@ Running log of prompts given to the AI assistant (Claude Code), the assistant's 
   - Asked the user about questions that came up while building (#54–#60): code case, a missing current year, an undefined year, UTC timestamps, overlapping school years, the threshold CHECK, and term labels.
   - User: "in test layer, focus on only 3 usecases in scope", "since we do not have much time", "enough tests to demonstrate those 3 usecases" → #61. The agents removed their infrastructure and error-handling test suites.
   - Wired `AddInfrastructure` into `Program.cs`; added the compose `api` service and the `.env.example` lines; tests run outside the image build (#62).
+  - Wave 2 ran two agents in parallel: UC1 (save) and UC2/UC3 (history, status). I merged them, kept UC1's School/Student repositories and dropped the duplicate mappers. Asked the user the agents' product questions (#64–#67).
+  - User: "ensure that solution and projects are implemented in .net 8, not .net10" → #63, which supersedes #21 and #51. A conversion agent works in parallel on build files, the EF 8 re-scaffold, a DataAnnotations validation filter and Swashbuckle.
 - **Decision:** In progress.
 
 ### 42. Black-box tester subagent

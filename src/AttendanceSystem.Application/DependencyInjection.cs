@@ -1,3 +1,4 @@
+using AttendanceSystem.Application.Attendance.SaveDailyAttendance;
 using AttendanceSystem.Application.Common;
 using AttendanceSystem.Application.Students.AbsenceSummary;
 using AttendanceSystem.Application.Students.AttendanceHistory;
@@ -14,6 +15,7 @@ public static class DependencyInjection
             .ValidateDataAnnotations()
             .ValidateOnStart();
 
+        services.AddScoped<SaveDailyAttendanceHandler>();
         services.AddScoped<GetStudentAttendanceHistoryHandler>();
         services.AddScoped<GetStudentAbsenceSummaryHandler>();
 
