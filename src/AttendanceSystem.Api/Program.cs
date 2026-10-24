@@ -12,8 +12,8 @@ builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddSingleton(TimeProvider.System);
 builder.Services.AddErrorHandling();
-builder.Services.AddValidation();
-builder.Services.AddOpenApi();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 builder.Services.AddHealthChecks();
 builder.Services.AddRequestLogging();
 builder.Services.AddConfiguredCors();
@@ -31,7 +31,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseCors();
 
-app.MapOpenApi();
+app.UseSwagger(options => options.RouteTemplate = "openapi/{documentName}.json");
 app.MapHealthChecks("/health");
 app.MapApiEndpoints();
 

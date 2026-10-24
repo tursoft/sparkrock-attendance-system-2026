@@ -1,12 +1,12 @@
-# Build: SDK 10.0.402 satisfies global.json (10.0.400, latestFeature) and bundles runtime 10.0.13.
+# Build: SDK 8.0.426 matches global.json and bundles runtime 8.0.32.
 # The SDK runs natively on the build machine and publishes for the target architecture only,
 # which drops the Windows and macOS native libraries from the output.
-FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:10.0.402-noble AS build
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0.426-noble AS build
 ARG TARGETARCH
 WORKDIR /src
 
 # Restore in its own layer so it is cached until a project file or package version changes.
-COPY global.json Directory.Build.props Directory.Packages.props .editorconfig *.slnx ./
+COPY global.json Directory.Build.props Directory.Packages.props .editorconfig *.sln ./
 COPY src/AttendanceSystem.Api/AttendanceSystem.Api.csproj src/AttendanceSystem.Api/
 COPY src/AttendanceSystem.Application/AttendanceSystem.Application.csproj src/AttendanceSystem.Application/
 COPY src/AttendanceSystem.Domain/AttendanceSystem.Domain.csproj src/AttendanceSystem.Domain/
@@ -19,7 +19,7 @@ RUN dotnet publish src/AttendanceSystem.Api/AttendanceSystem.Api.csproj \
 
 # Run: the full (non-chiseled) Ubuntu image ships tzdata and ICU, which the IANA time zone
 # lookups (America/Toronto) need, and bash for the health check.
-FROM mcr.microsoft.com/dotnet/aspnet:10.0.13-noble AS runtime
+FROM mcr.microsoft.com/dotnet/aspnet:8.0.32-noble AS runtime
 WORKDIR /app
 
 ENV ASPNETCORE_HTTP_PORTS=8080
