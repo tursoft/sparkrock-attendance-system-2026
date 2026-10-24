@@ -1,0 +1,40 @@
+name: attendance-system
+
+x-sqlserver-image: &sqlserver-image mcr.microsoft.com/mssql/server:2022-CU27-GDR1-ubuntu-22.04
+
+services:
+  db:
+    image: *sqlserver-image
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: Developer
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD:?Set MSSQL_SA_PASSWORD in .env (see .env.example)}
+    ports:
+      - "${DB_PORT:-1433}:1433"
+    volumes:
+      - db-data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD-SHELL", "SQLCMDPASSWORD=\"$$MSSQL_SA_PASSWORD\" /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -C -b -Q 'SELECT 1' -o /dev/null"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+
+  # Creates the Attendance database on first start; exits immediately when it already exists.
+  db-init:
+    image: *sqlserver-image
+    entrypoint: ["/bin/bash", "/db/init.sh"]
+    environment:
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD:?Set MSSQL_SA_PASSWORD in .env (see .env.example)}
+      DB_HOST: db
+    volumes:
+      - ./legacy/Database:/db/legacy:ro
+      - ./db/scripts:/db/scripts:ro
+      - ./db/init.sh:/db/init.sh:ro
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: "no"
+
+volumes:
+  db-data:
