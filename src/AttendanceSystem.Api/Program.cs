@@ -32,6 +32,7 @@ app.UseHttpsRedirection();
 app.UseCors();
 
 app.UseSwagger(options => options.RouteTemplate = "openapi/{documentName}.json");
+app.UseSwaggerUI(options => options.SwaggerEndpoint("/openapi/v1.json", "Attendance API v1"));
 app.MapHealthChecks("/health");
 app.MapApiEndpoints();
 

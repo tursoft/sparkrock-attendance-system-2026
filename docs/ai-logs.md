@@ -297,3 +297,15 @@ Running log of prompts given to the AI assistant (Claude Code), the assistant's 
 - **Prompt:** "this agent should work readonly, never change any file"
 - **AI suggestion/action:** Made `.claude/agents/tester.md` strictly read-only. It no longer creates `.env`; when `.env` is missing it runs `docker compose --env-file .env.example`. Shell writes (redirects to files, `cp`, `mv`, `rm`, `sed -i`, `Set-Content`, `Out-File`, git commands that change the repo) are forbidden, and output stays on stdout and in the final report. Added decision 58. Staged only the new decision row, leaving the parallel session's uncommitted decisions 55–57 out of this commit.
 - **Decision:** Accepted.
+
+### 44. Swagger UI demo
+- **Prompts:** "now start the stack if not running and demonstrate 3 usecases over swagger ui", "use cladeu chrome extension", "or if not availkable then use playwright mcp", "add swagger ui"
+- **AI suggestion/action:**
+  - The stack was already running and healthy. The API served only `/openapi/v1.json`, with no Swagger UI and no CORS origins.
+  - Briefly ran a throwaway nginx container that served Swagger UI and proxied to the API, then removed it once the user asked to add Swagger UI to the app.
+  - Added `UseSwaggerUI` in `Program.cs` at `/swagger`, enabled in every environment (#69), and rebuilt the `api` container.
+  - Demonstrated all three use cases through Claude in Chrome on Cedar Ridge demo data (threshold 5) and recorded `attendance_swagger_demo.gif`:
+    - UC1 `PUT /schools/2/attendance/2026-10-23`: student 6 absent, student 5 late 15 min. 200 OK; student 6 now has 1 absence, and student 5 stays at 6 because a late mark is not an absence.
+    - UC2 `GET /students/5/attendance`: 7 records for 2026-2027, newest first, starting with the new late mark.
+    - UC3 `GET /students/5/absence-summary`: 6 absences, threshold 5, chronically absent.
+- **Decision:** Accepted.
