@@ -356,3 +356,12 @@ Running log of prompts given to the AI assistant (Claude Code), the assistant's 
     - UC3 `GET /students/3/absence-summary`: 11 absences, threshold 10, chronically absent.
   - Observed: Swagger UI now prefills `page`/`pageSize` defaults and enforces `pageSize` ≤ 200 client-side.
 - **Decision:** Accepted.
+
+### 50. Unit and integration test rerun
+- **Prompt:** "run again"
+- **AI suggestion/action:** Rebuilt and ran `dotnet test AttendanceSystem.sln` at commit `bd401f2`. All 206 tests passed, none skipped:
+  - Domain.Tests: 150
+  - Application.Tests: 2
+  - Api.Tests: 9
+  - Api.IntegrationTests: 45, against a Testcontainers SQL Server
+- **Decision:** Accepted.
