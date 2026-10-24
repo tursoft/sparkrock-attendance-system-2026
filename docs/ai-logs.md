@@ -41,3 +41,8 @@ Running log of prompts given to the AI assistant (Claude Code), the assistant's 
 - **Prompt:** "create claude.md file, keep it short and create dedicated rule files in .claude\rules folder and refer from claude.md"
 - **AI suggestion/action:** Rewrote `CLAUDE.md` as a short project overview with links to three rule files: `.claude/rules/git.md` (commit policy and convention), `.claude/rules/ai-logs.md` (this log's format), and `.claude/rules/graphify.md` (moved from the generated graphify section in `CLAUDE.md`).
 - **Decision:** Accepted.
+
+### 7. No dedicated commits for the log
+- **Prompt:** "do not creatge dedicated commit for ai-logs.md, keep its changes in relevant work commit"
+- **AI suggestion/action:** Updated `.claude/rules/ai-logs.md`: log changes are always staged with the related work commit, never committed alone. Entries for prompts that produce no committable work stay uncommitted until the next work commit. Left the existing history as it is.
+- **Decision:** Accepted.
