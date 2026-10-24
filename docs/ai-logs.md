@@ -215,3 +215,8 @@ Running log of prompts given to the AI assistant (Claude Code), the assistant's 
 - **Prompt:** "aslo do not create dedicated ghit commit just for decisions.md but include it in relevant work commits"
 - **AI suggestion/action:** Updated `.claude/rules/decisions.md`: never commit `docs/decisions.md` on its own (or with only `docs/ai-logs.md`); decisions with no committable work stay uncommitted until the next work commit. Matches the existing rule for the AI log.
 - **Decision:** Accepted.
+
+### 34. README
+- **Prompt:** "create a shor readme.md file including key architecture decisions, list of all ambiquities and how we addressed them. also add how to run this app. keep it short and max 1 printed page"
+- **AI suggestion/action:** Wrote a one-page `README.md`: the three endpoints, eight key architecture decisions, a table of all 20 ambiguities (AMB-1–AMB-20) with their resolutions taken from `docs/implementation-plan.md`, and run steps (`docker compose up`, `dotnet test`). The run steps describe the planned compose setup, since no code exists yet. Flagged that `docs/decisions.md` stops at #19 while the plan cites #20–#49.
+- **Decision:** Pending user review.
