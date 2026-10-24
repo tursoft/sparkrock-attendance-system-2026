@@ -272,3 +272,14 @@ Running log of prompts given to the AI assistant (Claude Code), the assistant's 
     - A vulnerable transitive `System.Security.Cryptography.Pkcs` comes in through SqlClient and is pinned to a patched version (#52).
   - Later phases run as parallel subagents in separate git worktrees, merged by the main thread (#53).
 - **Decision:** In progress.
+
+### 42. Black-box tester subagent
+- **Prompts:** "define a new subagent for this repo named "tester". it will be a black-box testers, will not check code, just will use the endpoints and test app based on scope and other documentations. if app is not running then auto start app and after completion report findings, stop app.", "to check data on db, connect db using credentials in .env file", "also use it to dicover urls, port etc.", "you are also responsible to validate if behaviour is consistent to docs and analysis of legacy"
+- **AI suggestion/action:** Added `.claude/agents/tester.md` (tools: Bash, PowerShell, Read):
+  - It may read only the docs, the README and `.env`, never `src/`, `tests/`, `db/` or `legacy/`.
+  - It gets the base URL, ports and DB credentials from `.env`, falling back to `.env.example`, then to `localhost:8080`.
+  - It checks `/health`. If the API is down, it runs `docker compose up -d --build` and waits with curl retries. If there is no compose file or no Docker, it reports Blocked.
+  - It builds a test plan from the scope, plan §5/§6, the decisions and the legacy rules, and runs it with curl. It verifies persisted rows with read-only `sqlcmd` `SELECT`s and keeps passwords out of the report.
+  - Afterwards it stops only what it started (`docker compose down` without `-v`) and returns a report: findings by severity with repro commands, test cases, a legacy consistency table, cases not testable black-box, and spec gaps.
+  - Linked it from `CLAUDE.md` and added decision 54. A parallel session had taken #51–#53, so the first commit's duplicate #51 was renumbered.
+- **Decision:** Accepted.
