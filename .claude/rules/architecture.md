@@ -114,6 +114,15 @@ Rules:
   - Don't merge code that only looks alike but means different things. Duplication beats the wrong abstraction.
 - Prefer clear names over comments. Comment only the why that the code can't show.
 
+## Containers
+
+- `Dockerfile` for the API: multi-stage build (SDK image to build and publish, `aspnet` runtime image to run), running as a non-root user, with a `.dockerignore`.
+- `docker-compose.yml` runs the whole stack locally with one command (`docker compose up`):
+  - `db`: SQL Server, with a health check and a named volume. Initialized from the schema scripts, mounting `legacy/Database` read-only.
+  - `api`: depends on a healthy `db`. Gets its connection string from environment variables or a `.env` file that is not committed (commit `.env.example`).
+- Tests run against the same stack: integration tests use Testcontainers (see Testing), and `docker compose` can also run the test suite in a container.
+- Keep the files next to the solution root and update them whenever projects are added.
+
 ## Testing
 
 - Use test-driven development, red-green-refactor:

@@ -145,3 +145,12 @@ Running log of prompts given to the AI assistant (Claude Code), the assistant's 
   - One static partial mapper per boundary: Application for domain ↔ DTO, Infrastructure for persistence ↔ domain.
   - `IQueryable` projections for reads, constructor mapping so domain invariants run, and unmapped-member diagnostics as errors.
 - **Decision:** Accepted.
+
+### 22. Docker and docker compose
+- **Prompt:** "implement dockerfile and dockercompose to run stack in local and test"
+- **AI suggestion/action:** No .NET solution exists yet, so writing a Dockerfile now would mean guessing project paths. Recorded a Containers section in `.claude/rules/architecture.md` instead:
+  - Multi-stage non-root Dockerfile.
+  - Compose with a SQL Server service (health check, volume, schema init from the read-only `legacy/Database`) and the API service.
+  - `.env.example` committed, and tests run via Testcontainers or compose.
+  - The actual files will be created when the solution is scaffolded.
+- **Decision:** Pending: the files will be implemented with the solution scaffold.
