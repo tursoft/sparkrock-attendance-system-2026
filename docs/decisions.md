@@ -20,3 +20,4 @@ Project decisions, newest last. Each entry: what was decided, why, and its statu
 | 14 | 2026-10-24 | No authentication or authorization in this version | Out of scope; route groups make adding it later a one-place change | Accepted |
 | 15 | 2026-10-24 | Use parallel subagents for independent work | Faster delivery. Agents get non-overlapping file scopes to avoid conflicts | Accepted |
 | 16 | 2026-10-24 | Follow SOLID, YAGNI, DRY and 12-factor app principles | Maintainable, testable, cloud-ready code. Extends decision 9 | Accepted |
+| 17 | 2026-10-24 | `.gitignore` ignores .NET build output, IDE files, test/coverage results, local secrets (`.env`, `*.pfx`; `.env.example` kept), the compose override, OS files and `graphify-out/` | Keep the repo clean and secrets out of source control | Accepted |

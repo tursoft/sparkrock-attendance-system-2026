@@ -1,1 +1,85 @@
+# --- .NET build output ---
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa]rm/
+[Aa]rm64/
+[Ll]og/
+[Ll]ogs/
+artifacts/
+publish/
+*.nupkg
+*.snupkg
+project.lock.json
+project.fragment.lock.json
+*.dll.config
+
+# --- NuGet ---
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+*.nuget.props
+*.nuget.targets
+.nuget/
+
+# --- Visual Studio / Rider / VS Code ---
+.vs/
+*.user
+*.userosscache
+*.suo
+*.sln.docstates
+*.rsuser
+.idea/
+*.sln.iml
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+launchSettings.local.json
+
+# --- Tests and coverage ---
+[Tt]est[Rr]esult*/
+*.trx
+*.coverage
+*.coveragexml
+coverage*.json
+coverage*.xml
+coverage*.info
+coverage/
+TestResults/
+
+# --- Secrets and local config (12-factor: config from environment) ---
+.env
+.env.*
+!.env.example
+appsettings.*.local.json
+secrets.json
+*.pfx
+*.pem
+*.key
+
+# --- Docker ---
+docker-compose.override.yml
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# --- Misc ---
+*.log
+*.tmp
+*.swp
+*~
+
+# --- Claude Code personal settings ---
+.claude/settings.local.json
+
+# --- Graphify output (regenerable) ---
 graphify-out/

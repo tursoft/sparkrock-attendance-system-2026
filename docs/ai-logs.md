@@ -174,3 +174,14 @@ Running log of prompts given to the AI assistant (Claude Code), the assistant's 
 - **Prompt:** "stick to major SWE principles like SOLID, YAGNI, DRY and 12 factor apps"
 - **AI suggestion/action:** Renamed the "Code reuse and complexity" section of `.claude/rules/architecture.md` to "Engineering principles". Added SOLID (applied to the DDD layers and DI) and the relevant 12-factor items (env config, backing services, stateless processes, stdout logs, dev/prod parity). Labelled the existing DRY and KISS/YAGNI rules. Added decision 16.
 - **Decision:** Accepted.
+
+### 27. .gitignore for the solution
+- **Prompt:** "add proper .gitignore file for solution"
+- **AI suggestion/action:** Replaced the one-line `.gitignore` with a .NET-focused one covering:
+  - Build output (`bin/`, `obj/`, publish, packages) and NuGet artifacts.
+  - IDE files (Visual Studio, Rider, VS Code, keeping the shared `.vscode` configs).
+  - Test results and coverage.
+  - Local secrets: `.env*` except `.env.example`, `secrets.json`, certificates and keys.
+  - `docker-compose.override.yml`, OS files, `.claude/settings.local.json` and `graphify-out/`.
+  - Added decision 17.
+- **Decision:** Accepted.
