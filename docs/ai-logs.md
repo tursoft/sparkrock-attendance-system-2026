@@ -132,3 +132,8 @@ Running log of prompts given to the AI assistant (Claude Code), the assistant's 
   - Optimistic concurrency via `rowversion`, mapped to `409 Conflict`.
   - Integration tests prove that nothing persists on mid-use-case failure.
 - **Decision:** Accepted.
+
+### 20. DTOs at the API boundary
+- **Prompt:** "use dtos to exchange data in api, not ef entitites"
+- **AI suggestion/action:** Already covered by the Backend and DDD rules. Made the Backend rule explicit: DTOs only, as immutable records, with no EF entities or domain aggregates crossing the API. Mapping happens in the application layer, and read queries project directly to DTOs.
+- **Decision:** Accepted.

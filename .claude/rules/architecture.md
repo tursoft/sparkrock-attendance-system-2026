@@ -12,7 +12,7 @@
   - Correct HTTP methods and status codes (`201 Created` with `Location`, `204 No Content`, `404`, `409`, and so on)
   - Errors returned as RFC 7807 `ProblemDetails`
   - Input validated at the boundary
-  - Separate request/response DTOs, never EF/database entities
+  - The API exchanges data only through request/response DTOs (immutable `record`s). Never accept or return EF entities or domain aggregates. The application layer maps between DTOs and domain models, and read queries may project straight from EF to DTOs with `Select`.
   - OpenAPI document for every endpoint
   - Group endpoints by resource with `MapGroup`, one file per resource
 
