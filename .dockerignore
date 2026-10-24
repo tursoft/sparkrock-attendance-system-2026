@@ -1,0 +1,45 @@
+# The image needs only the solution-level files and src/. Keep the build context small and secret-free.
+
+# Build output
+**/bin/
+**/obj/
+**/TestResults/
+**/*.trx
+artifacts/
+publish/
+
+# Not part of the API image
+tests/
+docs/
+legacy/
+db/
+graphify-out/
+**/*.md
+docker-compose*.yml
+compose*.yml
+
+# Tooling and VCS
+.git
+.gitignore
+.gitattributes
+.vs/
+.idea/
+.vscode/
+.claude/
+**/*.user
+**/*.suo
+
+# Secrets and local config
+.env
+.env.*
+**/appsettings.*.local.json
+**/secrets.json
+**/*.pfx
+**/*.pem
+**/*.key
+
+# OS and editor noise
+**/.DS_Store
+**/Thumbs.db
+**/*.log
+**/*.swp
