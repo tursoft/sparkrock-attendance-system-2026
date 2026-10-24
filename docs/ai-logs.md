@@ -210,3 +210,8 @@ Running log of prompts given to the AI assistant (Claude Code), the assistant's 
 - **Prompt:** "this is the scope of this version, store in docs\0.scope.md and stick to this scope. avoid overengineering" (screenshot: save daily attendance for a set of students; retrieve attendance history for a student; return chronic absenteeism status for a student)
 - **AI suggestion/action:** Created `docs/0.scope.md` with the three use cases mapped to the legacy procedures, an explicit out-of-scope list (auth, UI, printing, student lists, master-data maintenance, alert resolution, data migration), and a no-overengineering guideline. Linked it from `CLAUDE.md` and the analysis. Added decisions 18 (scope) and 19 (fix legacy bugs deliberately).
 - **Decision:** Accepted.
+
+### 33. No dedicated commits for the decision log
+- **Prompt:** "aslo do not create dedicated ghit commit just for decisions.md but include it in relevant work commits"
+- **AI suggestion/action:** Updated `.claude/rules/decisions.md`: never commit `docs/decisions.md` on its own (or with only `docs/ai-logs.md`); decisions with no committable work stay uncommitted until the next work commit. Matches the existing rule for the AI log.
+- **Decision:** Accepted.
