@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace AttendanceSystem.Api.IntegrationTests.SaveDailyAttendance;
 
@@ -175,7 +176,12 @@ public sealed class SaveDailyAttendanceTests(DatabaseFixture database) : IAsyncD
         var (schoolId, _) = await CreateSchoolWithTermAsync(absenceAlertThreshold: 1);
         var student = await _data.CreateStudentAsync(schoolId);
         await using var failingFactory = _factory.WithWebHostBuilder(builder => builder.ConfigureTestServices(services =>
-            services.ConfigureDbContext<AttendanceDbContext>(options => options.AddInterceptors(new FailAfterSubmissionLogInsert()))));
+        {
+            services.RemoveAll<DbContextOptions<AttendanceDbContext>>();
+            services.AddDbContext<AttendanceDbContext>(options => options
+                .UseSqlServer(database.ConnectionString)
+                .AddInterceptors(new FailAfterSubmissionLogInsert()));
+        }));
 
         var response = await PutAsync(failingFactory.CreateClient(), schoolId, "2026-10-20", Entry(student.StudentId, "A"));
 

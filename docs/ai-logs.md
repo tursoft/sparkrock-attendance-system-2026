@@ -277,7 +277,10 @@ Running log of prompts given to the AI assistant (Claude Code), the assistant's 
   - Wired `AddInfrastructure` into `Program.cs`; added the compose `api` service and the `.env.example` lines; tests run outside the image build (#62).
   - Wave 2 ran two agents in parallel: UC1 (save) and UC2/UC3 (history, status). I merged them, kept UC1's School/Student repositories and dropped the duplicate mappers. Asked the user the agents' product questions (#64–#67).
   - User: "ensure that solution and projects are implemented in .net 8, not .net10" → #63, which supersedes #21 and #51. A conversion agent works in parallel on build files, the EF 8 re-scaffold, a DataAnnotations validation filter and Swashbuckle.
-- **Decision:** In progress.
+  - User: "can you start to UC3?" Answered that UC3 was already implemented and merged (`GET /students/{id}/absence-summary`), and listed its behavior and tests.
+  - Merged the .NET 8 branch. Replaced the EF 9-only `ConfigureDbContext` in the atomicity test, applied `WithValidation<SaveDailyAttendanceRequest>()` on the save endpoint, and removed the filter/OpenAPI tests the conversion added (#61). Validation 400s now carry `traceId` (#68).
+  - Verified on .NET 8: 174 tests pass (150 domain, 2 application, 22 integration). `docker compose up --build` runs a healthy stack, and the three use cases work end to end on demo data: a save reached the threshold of 5 and raised an alert, history is paged newest first, the status is chronically absent, and the 400/404 responses are problem+json with `traceId`.
+- **Decision:** Accepted.
 
 ### 42. Black-box tester subagent
 - **Prompts:** "define a new subagent for this repo named "tester". it will be a black-box testers, will not check code, just will use the endpoints and test app based on scope and other documentations. if app is not running then auto start app and after completion report findings, stop app.", "to check data on db, connect db using credentials in .env file", "also use it to dicover urls, port etc.", "you are also responsible to validate if behaviour is consistent to docs and analysis of legacy"

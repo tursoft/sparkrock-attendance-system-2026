@@ -33,7 +33,12 @@ public sealed class ValidationFilter<TRequest>(IOptions<JsonOptions> jsonOptions
 
         return errors.Count == 0
             ? await next(context)
-            : TypedResults.ValidationProblem(errors.ToDictionary(error => error.Key, error => error.Value.ToArray(), StringComparer.Ordinal));
+            // TypedResults.Problem goes through IProblemDetailsService (adds traceId); ValidationProblem doesn't in .NET 8.
+            : TypedResults.Problem(new HttpValidationProblemDetails(
+                errors.ToDictionary(error => error.Key, error => error.Value.ToArray(), StringComparer.Ordinal))
+            {
+                Status = StatusCodes.Status400BadRequest,
+            });
     }
 
     private void ValidateObject(object instance, string prefix, Dictionary<string, List<string>> errors, HashSet<object> visited)

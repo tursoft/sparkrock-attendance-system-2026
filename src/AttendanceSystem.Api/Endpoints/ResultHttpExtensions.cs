@@ -31,7 +31,10 @@ public static class ResultHttpExtensions
         var extensions = new Dictionary<string, object?> { ["code"] = error.Code };
         return error.Kind switch
         {
-            ErrorKind.Validation => TypedResults.ValidationProblem(error.ValidationErrors.ToDictionary(), extensions: extensions),
+            // ValidationProblem bypasses IProblemDetailsService in .NET 8, so the trace id is added here.
+            ErrorKind.Validation => TypedResults.ValidationProblem(
+                error.ValidationErrors.ToDictionary(),
+                extensions: new Dictionary<string, object?>(extensions) { ["traceId"] = Activity.Current?.Id }),
             ErrorKind.NotFound => TypedResults.Problem(error.Message, statusCode: StatusCodes.Status404NotFound, extensions: extensions),
             ErrorKind.Conflict => TypedResults.Problem(error.Message, statusCode: StatusCodes.Status409Conflict, extensions: extensions),
             _ => throw new UnreachableException($"Unmapped error kind {error.Kind}."),

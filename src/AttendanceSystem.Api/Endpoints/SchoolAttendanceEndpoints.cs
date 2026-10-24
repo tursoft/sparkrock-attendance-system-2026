@@ -16,6 +16,7 @@ public static class SchoolAttendanceEndpoints
             .WithName("SaveDailyAttendance")
             .WithSummary("Save a school's attendance for one date")
             .WithDescription("Records or revises each student's attendance on the date and recalculates their absences for the school year.")
+            .WithValidation<SaveDailyAttendanceRequest>()
             .ProducesProblem(StatusCodes.Status404NotFound)
             .ProducesProblem(StatusCodes.Status409Conflict);
 
