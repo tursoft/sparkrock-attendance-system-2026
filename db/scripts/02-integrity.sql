@@ -1,4 +1,4 @@
--- Integrity backstops for the domain rules (decision #23). Runs after schema.sql and 01-missing-tables.sql.
+-- Integrity backstops for the domain rules (decision #23) and column changes to legacy tables. Runs after schema.sql and 01-missing-tables.sql.
 
 -- Filtered indexes require these options; sqlcmd defaults QUOTED_IDENTIFIER to OFF.
 SET ANSI_NULLS ON;
@@ -95,4 +95,9 @@ ALTER TABLE SchoolTerms
 -- Null means the default threshold of 10 (#59)
 ALTER TABLE Schools
     ADD CONSTRAINT CK_Schools_AbsenceAlertThreshold CHECK (AbsenceAlertThreshold IS NULL OR AbsenceAlertThreshold >= 1);
+GO
+
+-- Notes keep any Unicode text instead of silently turning non-Latin-1 characters into '?' (#75)
+ALTER TABLE StudentAttendance
+    ALTER COLUMN Notes NVARCHAR(500) NULL;
 GO

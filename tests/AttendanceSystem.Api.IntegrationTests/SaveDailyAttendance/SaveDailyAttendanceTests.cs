@@ -118,6 +118,22 @@ public sealed class SaveDailyAttendanceTests(DatabaseFixture database) : IAsyncD
     }
 
     [Theory]
+    [InlineData("Café naïve 日本 Ж 😀", 1)]
+    [InlineData("😀", 250)] // 500 UTF-16 units, the limit
+    public async Task Notes_keep_any_unicode_text(string text, int repeat)
+    {
+        var notes = string.Concat(Enumerable.Repeat(text, repeat));
+        var (schoolId, _) = await CreateSchoolWithTermAsync();
+        var student = await _data.CreateStudentAsync(schoolId);
+
+        var response = await PutAsync(_factory.CreateClient(), schoolId, "2026-10-20", Entry(student.StudentId, "P", notes: notes));
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        var stored = await _data.QueryAsync(db => db.StudentAttendances.Where(a => a.SchoolId == schoolId).Select(a => a.Notes).SingleAsync(CancellationToken));
+        Assert.Equal(notes, stored);
+    }
+
+    [Theory]
     [InlineData("2026-1-20")]
     [InlineData("20-10-2026")]
     [InlineData("2026-02-30")]

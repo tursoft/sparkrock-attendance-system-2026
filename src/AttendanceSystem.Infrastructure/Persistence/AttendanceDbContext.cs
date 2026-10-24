@@ -187,9 +187,7 @@ public partial class AttendanceDbContext : DbContext
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
-            entity.Property(e => e.Notes)
-                .HasMaxLength(500)
-                .IsUnicode(false);
+            entity.Property(e => e.Notes).HasMaxLength(500);
             entity.Property(e => e.RowVersion)
                 .IsRowVersion()
                 .IsConcurrencyToken();

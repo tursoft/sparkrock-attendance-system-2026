@@ -335,3 +335,8 @@ Running log of prompts given to the AI assistant (Claude Code), the assistant's 
   - Application.Tests: 2
   - Api.IntegrationTests: 22, against a Testcontainers SQL Server
 - **Decision:** Pending.
+
+### 47. Unicode notes
+- **Prompt:** "change the column to nvarchar(500)"
+- **AI suggestion/action:** Wrote a failing integration test first (accented, CJK and emoji notes, and 250 emoji at the 500-unit limit, stored as `?`). Added `ALTER COLUMN Notes NVARCHAR(500)` to `02-integrity.sql` (`legacy/` stays untouched), re-scaffolded from a throwaway SQL Server built by `db/init.sh` (only the `Notes` mapping changed), and recorded decision 75. Full suite green (206 tests). The running compose database predates the change: `db-init` skips an existing database, so it needs the same `ALTER` or `docker compose down -v`.
+- **Decision:** Accepted.
