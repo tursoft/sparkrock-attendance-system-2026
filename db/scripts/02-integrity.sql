@@ -91,4 +91,8 @@ ALTER TABLE StudentAttendance
 
 ALTER TABLE SchoolTerms
     ADD CONSTRAINT CK_SchoolTerms_EndDate CHECK (EndDate >= StartDate);
+
+-- Null means the default threshold of 10 (#59)
+ALTER TABLE Schools
+    ADD CONSTRAINT CK_Schools_AbsenceAlertThreshold CHECK (AbsenceAlertThreshold IS NULL OR AbsenceAlertThreshold >= 1);
 GO
