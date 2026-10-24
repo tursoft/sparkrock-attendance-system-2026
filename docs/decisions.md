@@ -18,3 +18,5 @@ Project decisions, newest last. Each entry: what was decided, why, and its statu
 | 12 | 2026-10-24 | Mapperly (`Riok.Mapperly`) for all mapping | Compile-time generated, no reflection, supports `IQueryable` projection | Accepted |
 | 13 | 2026-10-24 | Dockerfile and docker compose (SQL Server + API) for local runs and tests | One-command local stack | Accepted; files created with the solution scaffold |
 | 14 | 2026-10-24 | No authentication or authorization in this version | Out of scope; route groups make adding it later a one-place change | Accepted |
+| 15 | 2026-10-24 | Use parallel subagents for independent work | Faster delivery. Agents get non-overlapping file scopes to avoid conflicts | Accepted |
+| 16 | 2026-10-24 | Follow SOLID, YAGNI, DRY and 12-factor app principles | Maintainable, testable, cloud-ready code. Extends decision 9 | Accepted |

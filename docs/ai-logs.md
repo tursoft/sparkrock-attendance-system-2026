@@ -164,3 +164,13 @@ Running log of prompts given to the AI assistant (Claude Code), the assistant's 
 - **Prompt:** "start to store all decisions in docs\decisions.md"
 - **AI suggestion/action:** Created `docs/decisions.md` as a numbered table (date, decision, rationale, status) and back-filled decisions 1–14 from this session. Added `.claude/rules/decisions.md`: never delete rows, supersede instead, and commit with the related work. Linked it from `CLAUDE.md`.
 - **Decision:** Accepted.
+
+### 25. Parallel agents
+- **Prompt:** "also use parallel agents if possible"
+- **AI suggestion/action:** Added `.claude/rules/agents.md`: run independent work (legacy analysis, separate layers or features, per-aggregate tests, reviews) in concurrent subagents with non-overlapping file scopes, and keep sequential TDD steps in one thread. Linked it from `CLAUDE.md` and added decision 15.
+- **Decision:** Accepted.
+
+### 26. Engineering principles
+- **Prompt:** "stick to major SWE principles like SOLID, YAGNI, DRY and 12 factor apps"
+- **AI suggestion/action:** Renamed the "Code reuse and complexity" section of `.claude/rules/architecture.md` to "Engineering principles". Added SOLID (applied to the DDD layers and DI) and the relevant 12-factor items (env config, backing services, stateless processes, stdout logs, dev/prod parity). Labelled the existing DRY and KISS/YAGNI rules. Added decision 16.
+- **Decision:** Accepted.

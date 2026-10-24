@@ -102,13 +102,28 @@ Rules:
 - If caching is added, it must be distributed (for example Redis via `IDistributedCache`) or safe to lose per instance, with size limits and expirations.
 - Expose health checks (`/health`) for orchestrators and load balancers.
 
-## Code reuse and complexity
+## Engineering principles
 
-- Don't repeat yourself:
+- SOLID:
+  - Single responsibility per class.
+  - Open for extension through new types, not by editing switch statements.
+  - Substitutable implementations.
+  - Small, role-specific interfaces.
+  - Depend on abstractions, injected through DI. The Domain and Application layers never reference Infrastructure.
+- [12-factor app](https://12factor.net/):
+  - Config comes from the environment (`appsettings` overridden by environment variables), never hardcoded.
+  - Backing services (SQL Server) are attached resources, swappable by connection string.
+  - Processes are stateless (see Scalability).
+  - Logs go to stdout as event streams.
+  - Dev/prod parity through docker compose.
+  - Dependencies are declared explicitly (NuGet, pinned versions).
+  - Builds, releases and runs are separate stages.
+  - Fast startup and graceful shutdown.
+- Don't repeat yourself (DRY):
   - Extract shared logic once it appears a second time with the same meaning.
   - Use shared building blocks: a common `Result` type, `ProblemDetails` mapping, endpoint filters for validation, pagination helpers, and base test fixtures.
   - Prefer framework and library features over hand-rolled ones.
-- Keep it simple:
+- Keep it simple (KISS, YAGNI):
   - No speculative abstractions (generic repositories, factories, extra layers) until a real second use exists.
   - Small, single-purpose methods and classes, shallow nesting (early returns), low cyclomatic complexity.
   - Don't merge code that only looks alike but means different things. Duplication beats the wrong abstraction.
