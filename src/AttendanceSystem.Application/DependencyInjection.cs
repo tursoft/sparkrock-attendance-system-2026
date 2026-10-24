@@ -1,3 +1,4 @@
+using AttendanceSystem.Application.Attendance.SaveDailyAttendance;
 using AttendanceSystem.Application.Common;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,6 +12,8 @@ public static class DependencyInjection
             .BindConfiguration(AttendanceOptions.SectionName)
             .ValidateDataAnnotations()
             .ValidateOnStart();
+
+        services.AddScoped<SaveDailyAttendanceHandler>();
 
         return services;
     }
