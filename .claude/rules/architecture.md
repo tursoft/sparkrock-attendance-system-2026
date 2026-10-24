@@ -64,9 +64,9 @@ Rules:
 - Never leak internals. Production error responses contain no stack traces, SQL or exception messages.
 - No secrets in source control. Connection strings and keys come from configuration (user-secrets locally, environment variables in deployment).
 - Enforce HTTPS and HSTS. Configure CORS with explicit origins only.
-- Endpoints require authorization unless explicitly marked otherwise. Check per-resource access, not just authentication.
+- No authentication or authorization in this version. Don't add auth middleware, identity, or tokens. Keep endpoints in `MapGroup` route groups so `RequireAuthorization()` can be added in one place later.
 - Keep NuGet packages current, and check for known vulnerabilities with `dotnet list package --vulnerable`.
-- Add tests for security-relevant behavior: malicious input, unauthorized access, validation failures.
+- Add tests for security-relevant behavior: malicious input, validation failures.
 
 ## Error handling and logging
 

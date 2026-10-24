@@ -154,3 +154,13 @@ Running log of prompts given to the AI assistant (Claude Code), the assistant's 
   - `.env.example` committed, and tests run via Testcontainers or compose.
   - The actual files will be created when the solution is scaffolded.
 - **Decision:** Pending: the files will be implemented with the solution scaffold.
+
+### 23. No authentication
+- **Prompt:** "no authentication in this version"
+- **AI suggestion/action:** Replaced the authorization-by-default security rule: no auth in this version, with endpoints kept in `MapGroup` route groups so `RequireAuthorization()` can be added in one place later. Dropped "unauthorized access" from the security test list.
+- **Decision:** Accepted.
+
+### 24. Decision log
+- **Prompt:** "start to store all decisions in docs\decisions.md"
+- **AI suggestion/action:** Created `docs/decisions.md` as a numbered table (date, decision, rationale, status) and back-filled decisions 1–14 from this session. Added `.claude/rules/decisions.md`: never delete rows, supersede instead, and commit with the related work. Linked it from `CLAUDE.md`.
+- **Decision:** Accepted.
