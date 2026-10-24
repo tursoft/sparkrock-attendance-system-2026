@@ -261,3 +261,14 @@ Running log of prompts given to the AI assistant (Claude Code), the assistant's 
 - **Prompt:** "keep readme.md shorted, make it more compact"
 - **AI suggestion/action:** Cut `README.md` from 84 to about 60 lines. Use cases became a three-line endpoint list, and the doc links and status share one line. The architecture table went from 12 rows to 8 (still with the why). Out-of-scope and open ambiguities are grouped into single rows, and the missing-details table is folded into the ambiguities table. Every AMB and MIS ID still appears.
 - **Decision:** Pending user review.
+
+### 41. Implement the plan
+- **Prompt:** "plan seems good, now implement it. but use subagents as much as possible to parallelize work"
+- **AI suggestion/action:**
+  - Took "plan seems good" as approval of the pending proposals #21 (stack) and #23 (schema hardening) and marked them Accepted.
+  - Phase 0, done directly: solution with seven projects, central package versions, `.editorconfig` (Mapperly diagnostics as errors), `global.json`, and a local `dotnet-ef` tool.
+  - Two build findings, recorded as decisions:
+    - xUnit v3 needs Microsoft.Testing.Platform on the .NET 10 SDK (#51).
+    - A vulnerable transitive `System.Security.Cryptography.Pkcs` comes in through SqlClient and is pinned to a patched version (#52).
+  - Later phases run as parallel subagents in separate git worktrees, merged by the main thread (#53).
+- **Decision:** In progress.

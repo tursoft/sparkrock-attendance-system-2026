@@ -1,0 +1,30 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 4
+
+[*.{json,yml,yaml,props,csproj,slnx,xml}]
+indent_size = 2
+
+[*.cs]
+# Mapperly: unmapped members are errors unless explicitly ignored
+dotnet_diagnostic.RMG012.severity = error
+dotnet_diagnostic.RMG020.severity = error
+# Library code awaits without capturing a sync context only where it matters; ASP.NET Core has none
+dotnet_diagnostic.CA2007.severity = none
+# Scaffolded EF code and test names are allowed to differ from strict naming analyzers
+dotnet_diagnostic.CA1707.severity = none
+
+[**/Persistence/Entities/*.cs]
+generated_code = true
+
+[**/Persistence/AttendanceDbContext.cs]
+generated_code = true
+
+[*.sh]
+end_of_line = lf

@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/AttendanceSystem.Api/AttendanceSystem.Api.csproj" />
+    <Project Path="src/AttendanceSystem.Application/AttendanceSystem.Application.csproj" />
+    <Project Path="src/AttendanceSystem.Domain/AttendanceSystem.Domain.csproj" />
+    <Project Path="src/AttendanceSystem.Infrastructure/AttendanceSystem.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/AttendanceSystem.Api.IntegrationTests/AttendanceSystem.Api.IntegrationTests.csproj" />
+    <Project Path="tests/AttendanceSystem.Application.Tests/AttendanceSystem.Application.Tests.csproj" />
+    <Project Path="tests/AttendanceSystem.Domain.Tests/AttendanceSystem.Domain.Tests.csproj" />
+  </Folder>
+</Solution>
