@@ -340,3 +340,8 @@ Running log of prompts given to the AI assistant (Claude Code), the assistant's 
 - **Prompt:** "change the column to nvarchar(500)"
 - **AI suggestion/action:** Wrote a failing integration test first (accented, CJK and emoji notes, and 250 emoji at the 500-unit limit, stored as `?`). Added `ALTER COLUMN Notes NVARCHAR(500)` to `02-integrity.sql` (`legacy/` stays untouched), re-scaffolded from a throwaway SQL Server built by `db/init.sh` (only the `Notes` mapping changed), and recorded decision 75. Full suite green (206 tests). The running compose database predates the change: `db-init` skips an existing database, so it needs the same `ALTER` or `docker compose down -v`.
 - **Decision:** Accepted.
+
+### 48. Retest results
+- **Prompt:** (tester subagent report on `c514d19`, no user prompt)
+- **AI suggestion/action:** F-1 to F-4 confirmed fixed (96 cases: 92 passed). Applied decision 75 to the running compose database with the same in-place `ALTER` (keeps the data), rebuilt `api` from `9f13723`, and checked that `Café 你好 Ж 😀 €` round-trips. New findings put to the user: N-1 (an unreadable body's 400 has no `errors`/`code`; #70 and #72 disagree), N-2 (binding failures logged at Error by the framework's exception middleware as well as at Warning), N-3 (OpenAPI says `additionalProperties: false` but unknown fields are ignored; the 400 schema omits `code`/`traceId`).
+- **Decision:** Pending.
