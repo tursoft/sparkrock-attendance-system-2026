@@ -36,3 +36,8 @@ Running log of prompts given to the AI assistant (Claude Code), the assistant's 
 - **Prompts:** "use best practices in git commit names, keep them short," and "use prefixes feat, fix, doc etc."
 - **AI suggestion/action:** Adopted Conventional Commits (`type(scope): subject`, imperative, ≤50 chars), using the standard `docs` spelling rather than `doc`. Reworded the three existing unpushed commits to match.
 - **Decision:** Accepted. All future commits use feat/fix/docs/refactor/test/chore/... prefixes with short subjects.
+
+### 6. Restructure CLAUDE.md into rule files
+- **Prompt:** "create claude.md file, keep it short and create dedicated rule files in .claude\rules folder and refer from claude.md"
+- **AI suggestion/action:** Rewrote `CLAUDE.md` as a short project overview with links to three rule files: `.claude/rules/git.md` (commit policy and convention), `.claude/rules/ai-logs.md` (this log's format), and `.claude/rules/graphify.md` (moved from the generated graphify section in `CLAUDE.md`).
+- **Decision:** Accepted.

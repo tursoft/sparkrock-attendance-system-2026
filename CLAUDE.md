@@ -1,9 +1,12 @@
-## graphify
+# Attendance System
 
-This project has a knowledge graph at graphify-out/ with god nodes, community structure, and cross-file relationships.
+Sparkrock interview challenge: modernize a legacy student attendance system.
 
-Rules:
-- ALWAYS read graphify-out/GRAPH_REPORT.md before reading any source files, running grep/glob searches, or answering codebase questions. The graph is your primary map of the codebase.
-- IF graphify-out/wiki/index.md EXISTS, navigate it instead of reading raw files
-- For cross-module "how does X relate to Y" questions, prefer `python -m graphify query "<question>"`, `python -m graphify path "<A>" "<B>"`, or `python -m graphify explain "<concept>"` over grep — these traverse the graph's EXTRACTED + INFERRED edges instead of scanning files
-- After modifying code, run `python -m graphify update .` to keep the graph current (AST-only, no API cost).
+- `legacy/` contains the original source: a VB6 form (`Forms/frmDailyAttendance.frm`) and the SQL schema and stored procedures (`Database/`).
+- `docs/` contains project documentation.
+
+## Rules
+
+- [Git workflow](.claude/rules/git.md): auto-commit, never push, Conventional Commits
+- [AI collaboration log](.claude/rules/ai-logs.md): log prompts, suggestions and decisions
+- [Graphify](.claude/rules/graphify.md): use the knowledge graph before searching code
