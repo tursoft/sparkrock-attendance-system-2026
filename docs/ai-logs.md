@@ -185,3 +185,28 @@ Running log of prompts given to the AI assistant (Claude Code), the assistant's 
   - `docker-compose.override.yml`, OS files, `.claude/settings.local.json` and `graphify-out/`.
   - Added decision 17.
 - **Decision:** Accepted.
+
+### 28. Legacy analysis
+- **Prompt:** "analyze existing legacy folder and report in docs\01.legacy-analysis.md file. include what does app, how its flow, what are security issuyes, bugs and ambiquities."
+- **AI suggestion/action:** Read all four legacy files and wrote `docs/01.legacy-analysis.md`: inventory (including referenced-but-missing objects), what the app does, load/save/print flows as Mermaid diagrams, 10 security issues, 26 bugs, and 20 open ambiguities, plus how the target architecture addresses them. Key findings: SQL and XML injection in the form; in the save procedure, `@ExistingID` and the code flags are not reset per cursor iteration (attendance can overwrite the wrong student), the absence recount ignores the year, and there is no transaction.
+- **Decision:** Accepted, extended by #29–#31.
+
+### 29. Business rules and entities
+- **Prompt:** "detect and list bnusiness rules, entities"
+- **AI suggestion/action:** Made business rules their own section (R1–R23) and added an Entities section: every column with constraints, the inferred missing tables, a Mermaid ER diagram, and candidate aggregates for the port.
+- **Decision:** Accepted.
+
+### 30. Validation rules
+- **Prompt:** "validation rules"
+- **AI suggestion/action:** Added a Validation rules section: what the legacy code validates (almost nothing) and proposed port rules V1–V13 with their HTTP responses.
+- **Decision:** Accepted.
+
+### 31. Missing details
+- **Prompt:** "report any missing details that we may need"
+- **AI suggestion/action:** Added a Missing details section (MIS-1–MIS-19) covering source and schema, data and requirements, each with a fallback assumption.
+- **Decision:** Accepted.
+
+### 32. Scope of this version
+- **Prompt:** "this is the scope of this version, store in docs\0.scope.md and stick to this scope. avoid overengineering" (screenshot: save daily attendance for a set of students; retrieve attendance history for a student; return chronic absenteeism status for a student)
+- **AI suggestion/action:** Created `docs/0.scope.md` with the three use cases mapped to the legacy procedures, an explicit out-of-scope list (auth, UI, printing, student lists, master-data maintenance, alert resolution, data migration), and a no-overengineering guideline. Linked it from `CLAUDE.md` and the analysis. Added decisions 18 (scope) and 19 (fix legacy bugs deliberately).
+- **Decision:** Accepted.

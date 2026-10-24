@@ -21,3 +21,5 @@ Project decisions, newest last. Each entry: what was decided, why, and its statu
 | 15 | 2026-10-24 | Use parallel subagents for independent work | Faster delivery. Agents get non-overlapping file scopes to avoid conflicts | Accepted |
 | 16 | 2026-10-24 | Follow SOLID, YAGNI, DRY and 12-factor app principles | Maintainable, testable, cloud-ready code. Extends decision 9 | Accepted |
 | 17 | 2026-10-24 | `.gitignore` ignores .NET build output, IDE files, test/coverage results, local secrets (`.env`, `*.pfx`; `.env.example` kept), the compose override, OS files and `graphify-out/` | Keep the repo clean and secrets out of source control | Accepted |
+| 18 | 2026-10-24 | Scope limited to three use cases: save daily attendance, student attendance history, chronic absenteeism status ([0.scope.md](0.scope.md)) | Keep the port focused and avoid overengineering | Accepted |
+| 19 | 2026-10-24 | Port the intent of the legacy rules but fix the bugs listed in [01.legacy-analysis.md](01.legacy-analysis.md), recording each deviation here | Several legacy behaviors are defects (wrong-student updates, multi-year absence counts) | Accepted |
