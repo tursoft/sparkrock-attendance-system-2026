@@ -1,4 +1,10 @@
+using AttendanceSystem.Application.Common;
+using AttendanceSystem.Domain.AbsenceSummaries;
+using AttendanceSystem.Domain.Attendance;
+using AttendanceSystem.Domain.Schools;
+using AttendanceSystem.Domain.Students;
 using AttendanceSystem.Infrastructure.Persistence;
+using AttendanceSystem.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,6 +29,14 @@ public static class DependencyInjection
 
         services.AddDbContext<AttendanceDbContext>(options => options.UseSqlServer(connectionString));
         services.AddHealthChecks().AddDbContextCheck<AttendanceDbContext>();
+
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<ISchoolRepository, SchoolRepository>();
+        services.AddScoped<IStudentRepository, StudentRepository>();
+        services.AddScoped<IAttendanceCodeRepository, AttendanceCodeRepository>();
+        services.AddScoped<IAttendanceRecordRepository, AttendanceRecordRepository>();
+        services.AddScoped<IAbsenceSummaryRepository, AbsenceSummaryRepository>();
+        services.AddScoped<IAttendanceSubmissionRepository, AttendanceSubmissionRepository>();
 
         return services;
     }
