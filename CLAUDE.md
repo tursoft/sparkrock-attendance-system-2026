@@ -6,6 +6,7 @@ Sparkrock interview challenge: modernize a legacy student attendance system.
 - `docs/` contains project documentation.
 - **Scope:** only the use cases in [docs/0.scope.md](docs/0.scope.md). Stick to them and avoid overengineering.
 - Legacy analysis (rules, entities, validation, bugs, open questions): [docs/01.legacy-analysis.md](docs/01.legacy-analysis.md).
+- Implementation plan (phases, design, API contract, tests): [docs/02.implementation-plan.md](docs/02.implementation-plan.md).
 
 ## Rules
 

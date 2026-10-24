@@ -220,3 +220,39 @@ Running log of prompts given to the AI assistant (Claude Code), the assistant's 
 - **Prompt:** "create a shor readme.md file including key architecture decisions, list of all ambiquities and how we addressed them. also add how to run this app. keep it short and max 1 printed page"
 - **AI suggestion/action:** Wrote a one-page `README.md`: the three endpoints, eight key architecture decisions, a table of all 20 ambiguities (AMB-1–AMB-20) with their resolutions taken from `docs/implementation-plan.md`, and run steps (`docker compose up`, `dotnet test`). The run steps describe the planned compose setup, since no code exists yet. Flagged that `docs/decisions.md` stops at #19 while the plan cites #20–#49.
 - **Decision:** Pending user review.
+
+### 35. Implementation plan
+- **Prompt:** "now create an implementation-plan.md in docs folder based on analysis report, scope and all rules in project"
+- **AI suggestion/action:** Drafted the plan: goals and endpoints, solution layout, database scripts (missing tables, integrity constraints, seed data, EF scaffold), domain/application/infrastructure/api design, API contract, a test plan with legacy parity and bug-fix cases, containers, and nine phases with commits and parallel work. The first draft picked an answer for each ambiguity itself.
+- **Decision:** Accepted, but every ambiguity reopened as a question (see #36). Renamed to `docs/02.implementation-plan.md` (#39).
+
+### 36. Ask about ambiguities; track the answers
+- **Prompts:** "ask me any unclear, open questions, ambiquities. do not decide on you own", "also keep track of our decisions about such ambiquities", "and missing details"
+- **AI suggestion/action:**
+  - Asked seven rounds of questions with a recommended option each. The user picked:
+    - Code required (#25); unknown and inactive codes rejected (#26); excused absences count (#27); dates today or earlier (#28).
+    - Per student-school-year summaries (#36) and alerts (#37); UC3 with an optional `schoolId` (#46).
+    - Last write wins (#41); minutes late 0–600 (#40); audit user from config (#42); alerts never auto-resolve (#38).
+    - A per-school IANA time zone column (#29); the school year from a new `SchoolTerms.SchoolYear` column (#30), with dates outside every year rejected (#31), the default year being the latest started (#32), and the earliest start winning on overlap (#33).
+    - Only active students of the school (#34); `400` for an inactive school (#35); the code snapshot kept (#39).
+    - `200` with per-student results from UC1 (#43); history across all schools (#44), paged (#45); `200` with zeros when there is no summary (#47).
+    - DDL from inference (#22); `P`/`A`/`E`/`L` codes (#24); no batch cap (#48).
+  - The user declined the stack question (SQL Server version, .NET version, validation and test libraries), so it stays a pending proposal (#21), as does the schema hardening (#23).
+  - Recorded decisions 20–49. Added a **Resolution** column to the analysis Ambiguities and Missing details tables, linking each to its decision or marking it out of scope or open.
+  - Changed the scope guideline and `.claude/rules/decisions.md`: ambiguities are asked, never decided alone (#49).
+- **Decision:** Accepted as answered. Still open: AMB-19, MIS-10 volumes, MIS-12, MIS-14, MIS-15, MIS-19; pending: #21, #23.
+
+### 37. README revision
+- **Prompt:** "also create a short readme file including key archiectural decision with why. also any ambiquities detected and how we addressed them"
+- **AI suggestion/action:** A parallel session had already written and committed `README.md` (#34), so built on it instead of overwriting it. Turned the architecture bullets into a decision/why table tied to the legacy findings, added decision links to the ambiguity table, and added a missing-details summary, doc links, and a note that the run steps work only after phase 7.
+- **Decision:** Accepted.
+
+### 38. Paging
+- **Prompt:** "add paging for all table queries"
+- **AI suggestion/action:** Asked whether UC1's per-student results should be paged too. The user chose queries only: every list query is paged through one shared `PageRequest`/`PagedResult<T>` helper (default 50, cap 200, `totalCount`) (#50). Added paging tests to the plan.
+- **Decision:** Accepted.
+
+### 39. Rename the plan
+- **Prompt:** "rename implementation-plan.md to 02.implementation-plan.md"
+- **AI suggestion/action:** Renamed the file to match the numbered docs, updated the links in `docs/decisions.md`, and linked it from `CLAUDE.md` and the README.
+- **Decision:** Accepted.
