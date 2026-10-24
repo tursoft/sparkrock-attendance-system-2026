@@ -28,10 +28,10 @@ public static class ResultHttpExtensions
     private static Results<TSuccess, ValidationProblem, ProblemHttpResult> ToProblem<TSuccess>(Error error)
         where TSuccess : IResult
     {
-        KeyValuePair<string, object?>[] extensions = [new("code", error.Code)];
+        var extensions = new Dictionary<string, object?> { ["code"] = error.Code };
         return error.Kind switch
         {
-            ErrorKind.Validation => TypedResults.ValidationProblem(error.ValidationErrors, extensions: extensions),
+            ErrorKind.Validation => TypedResults.ValidationProblem(error.ValidationErrors.ToDictionary(), extensions: extensions),
             ErrorKind.NotFound => TypedResults.Problem(error.Message, statusCode: StatusCodes.Status404NotFound, extensions: extensions),
             ErrorKind.Conflict => TypedResults.Problem(error.Message, statusCode: StatusCodes.Status409Conflict, extensions: extensions),
             _ => throw new UnreachableException($"Unmapped error kind {error.Kind}."),

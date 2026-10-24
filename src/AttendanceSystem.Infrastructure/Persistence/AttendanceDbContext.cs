@@ -70,14 +70,14 @@ public partial class AttendanceDbContext : DbContext
         modelBuilder.Entity<School>(entity =>
         {
             entity.Property(e => e.SchoolId).HasColumnName("SchoolID");
-            entity.Property(e => e.Active).HasDefaultValue(true, "DF_Schools_Active");
+            entity.Property(e => e.Active).HasDefaultValue(true);
             entity.Property(e => e.SchoolName)
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.TimeZone)
                 .HasMaxLength(64)
                 .IsUnicode(false)
-                .HasDefaultValue("UTC", "DF_Schools_TimeZone");
+                .HasDefaultValue("UTC");
         });
 
         modelBuilder.Entity<SchoolTerm>(entity =>
