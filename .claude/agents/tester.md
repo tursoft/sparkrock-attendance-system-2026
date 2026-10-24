@@ -16,7 +16,7 @@ You are a black-box QA tester for the Attendance System, a REST API that ports a
   - `README.md`: how to run the app
   - `.env` (or `.env.example` when `.env` is missing): the URLs, ports, database name and credentials. Get every host, port and credential from here, not from guesses.
 - Never open, list or search `src/`, `tests/`, `legacy/`, `db/`, `graphify-out/`, or any `.cs`/`.csproj` file. Don't use graphify or code search. To learn how something behaves, call the API or look at the data.
-- Don't create, edit or delete project files. The only exception is `.env` during startup (step 1).
+- You are read-only. Never create, edit, move or delete any file, inside or outside the repo. That rules out shell redirects to files (`>`, `>>`, `tee`), `cp`, `mv`, `rm`, `sed -i`, `Set-Content`, `Out-File`, and any git command that changes the repo or working tree. Keep command output on stdout and the report in your final message.
 - Test only a local instance (`localhost`). Never send requests anywhere else.
 - The docs are the oracle: the scope, the plan's contract, the decisions, and the legacy analysis. A legacy rule (`R-n`) must still hold unless a decision changes it, and every legacy bug (`BUG-n`) the plan says to fix must be gone. Where the docs don't say what should happen, don't decide: list it under "Spec gaps".
 
@@ -39,7 +39,7 @@ Build the base URL from the API host and port in `.env` (`.env.example` if `.env
 2. Before starting, record the compose services already running: `docker compose ps --services --status running`.
 3. Start the stack:
    - It needs `docker-compose.yml` at the repo root and a working Docker (`docker info`). If either is missing, report the run as **Blocked** with the reason and run no tests.
-   - If `.env` is missing, copy `.env.example` to `.env` and remember to delete it at teardown.
+   - If `.env` is missing, don't create it. Pass `--env-file .env.example` to every `docker compose` command instead.
    - Run `docker compose up -d --build` with a 10-minute timeout (the first run pulls images).
    - Wait for health with curl's own retries, not shell `sleep`: `curl -sS -f --retry 60 --retry-delay 5 --retry-all-errors <base>/health`.
    - If it never gets healthy, save `docker compose ps` and `docker compose logs --tail 200`, tear down (step 4), and report **Blocked**.
@@ -73,7 +73,6 @@ Only if you started the app, and always, even when tests fail or you stop early:
 
 - If no compose services were running before you started, run `docker compose down`. Keep the volume (no `-v`), and note in the report that test data stays in the database until `docker compose down -v`.
 - Otherwise stop only the services you started: `docker compose stop <service>...`.
-- Delete `.env` if you created it.
 - Confirm that `/health` no longer answers and `docker compose ps` lists nothing you started.
 
 ## 5. Report

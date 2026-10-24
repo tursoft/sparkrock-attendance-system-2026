@@ -283,3 +283,8 @@ Running log of prompts given to the AI assistant (Claude Code), the assistant's 
   - Afterwards it stops only what it started (`docker compose down` without `-v`) and returns a report: findings by severity with repro commands, test cases, a legacy consistency table, cases not testable black-box, and spec gaps.
   - Linked it from `CLAUDE.md` and added decision 54. A parallel session had taken #51–#53, so the first commit's duplicate #51 was renumbered.
 - **Decision:** Accepted.
+
+### 43. Read-only tester
+- **Prompt:** "this agent should work readonly, never change any file"
+- **AI suggestion/action:** Made `.claude/agents/tester.md` strictly read-only. It no longer creates `.env`; when `.env` is missing it runs `docker compose --env-file .env.example`. Shell writes (redirects to files, `cp`, `mv`, `rm`, `sed -i`, `Set-Content`, `Out-File`, git commands that change the repo) are forbidden, and output stays on stdout and in the final report. Added decision 58. Staged only the new decision row, leaving the parallel session's uncommitted decisions 55–57 out of this commit.
+- **Decision:** Accepted.
