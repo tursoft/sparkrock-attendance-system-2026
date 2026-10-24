@@ -36,5 +36,20 @@ services:
         condition: service_healthy
     restart: "no"
 
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      db-init:
+        condition: service_completed_successfully
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ConnectionStrings__Attendance: "Server=db,1433;Database=Attendance;User Id=sa;Password=${MSSQL_SA_PASSWORD:?Set MSSQL_SA_PASSWORD in .env (see .env.example)};TrustServerCertificate=True;Encrypt=True"
+      Attendance__AuditUser: ${AUDIT_USER:-attendance-api}
+    ports:
+      - "${API_PORT:-8080}:8080"
+    restart: unless-stopped
+
 volumes:
   db-data:

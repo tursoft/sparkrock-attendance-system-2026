@@ -83,3 +83,6 @@ $RECYCLE.BIN/
 
 # --- Graphify output (regenerable) ---
 graphify-out/
+
+# --- Agent worktrees ---
+.claude/worktrees/

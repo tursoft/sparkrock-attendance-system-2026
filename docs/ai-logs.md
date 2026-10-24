@@ -271,6 +271,10 @@ Running log of prompts given to the AI assistant (Claude Code), the assistant's 
     - xUnit v3 needs Microsoft.Testing.Platform on the .NET 10 SDK (#51).
     - A vulnerable transitive `System.Security.Cryptography.Pkcs` comes in through SqlClient and is pinned to a patched version (#52).
   - Later phases run as parallel subagents in separate git worktrees, merged by the main thread (#53).
+  - Wave 1 ran three agents in parallel: database scripts with compose, EF scaffold and the Testcontainers fixture; the domain layer, written test-first; and the API error handling and logging with the shared `Result`/paging types. A Dockerfile agent ran alongside them on request ("if there is any phase that can start parallel to those, start them"). All four branches are merged.
+  - Asked the user about questions that came up while building (#54–#60): code case, a missing current year, an undefined year, UTC timestamps, overlapping school years, the threshold CHECK, and term labels.
+  - User: "in test layer, focus on only 3 usecases in scope", "since we do not have much time", "enough tests to demonstrate those 3 usecases" → #61. The agents removed their infrastructure and error-handling test suites.
+  - Wired `AddInfrastructure` into `Program.cs`; added the compose `api` service and the `.env.example` lines; tests run outside the image build (#62).
 - **Decision:** In progress.
 
 ### 42. Black-box tester subagent

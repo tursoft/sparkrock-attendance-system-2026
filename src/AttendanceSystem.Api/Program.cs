@@ -1,3 +1,4 @@
+using AttendanceSystem.Infrastructure;
 using AttendanceSystem.Api.Endpoints;
 using AttendanceSystem.Api.ErrorHandling;
 using AttendanceSystem.Api.Hosting;
@@ -8,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Logging.AddJsonStdoutLogging();
 
 builder.Services.AddApplication();
+builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddSingleton(TimeProvider.System);
 builder.Services.AddErrorHandling();
 builder.Services.AddValidation();
