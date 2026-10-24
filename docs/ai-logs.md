@@ -46,3 +46,31 @@ Running log of prompts given to the AI assistant (Claude Code), the assistant's 
 - **Prompt:** "do not creatge dedicated commit for ai-logs.md, keep its changes in relevant work commit"
 - **AI suggestion/action:** Updated `.claude/rules/ai-logs.md`: log changes are always staged with the related work commit, never committed alone. Entries for prompts that produce no committable work stay uncommitted until the next work commit. Left the existing history as it is.
 - **Decision:** Accepted.
+
+### 8. Make legacy/ read-only
+- **Prompt:** "I am developing a port of legacy app stored in folder legacy (keep this folder readonly, do not make any change on it. set deny rules in persmission file on claude)"
+- **AI suggestion/action:** Added `permissions.deny: ["Edit(/legacy/**)"]` to `.claude/settings.json`. The `Edit` rule covers every file-writing tool (Edit, Write, NotebookEdit), and the leading `/` anchors it to the project root.
+- **Decision:** Accepted.
+
+### 9. Architecture rules
+- **Prompt:** "store my specs in architecture rules"
+- **AI suggestion/action:** Created `.claude/rules/architecture.md` to record the project specs: the project is a port of the legacy app, and `legacy/` is read-only. Linked it from `CLAUDE.md`.
+- **Decision:** Accepted.
+
+### 10. Target stack
+- **Prompt:** "app will be .net minimal api, as rest with best practices"
+- **AI suggestion/action:** Added a Backend section to `.claude/rules/architecture.md`: ASP.NET Core Minimal API with REST conventions (resource routes, correct status codes, ProblemDetails errors, boundary validation, DTOs separate from entities, OpenAPI, endpoints grouped per resource with `MapGroup`).
+- **Decision:** Accepted.
+
+### 11. Testing requirement
+- **Prompt:** "implement both unit and integratiıon tests"
+- **AI suggestion/action:** No app code exists yet, so recorded this as a rule: a Testing section in `.claude/rules/architecture.md`. Unit tests cover isolated logic. Integration tests run through `WebApplicationFactory` against a Testcontainers SQL Server, and legacy stored procedure behavior becomes test cases.
+- **Decision:** Accepted (tests will be written alongside each feature).
+
+### 12. Data access stack
+- **Prompt:** "use mssql, db first appoorach, linq and entity framework"
+- **AI suggestion/action:** Added a Data access section to `.claude/rules/architecture.md`:
+  - SQL Server with EF Core, database-first: scaffold via `dotnet ef dbcontext scaffold`, never hand-edit generated files, extend through `partial` classes, no code-first migrations.
+  - Queries in LINQ, with legacy stored procedure logic ported to LINQ.
+  - Async calls, and `AsNoTracking()` for reads.
+- **Decision:** Accepted.
