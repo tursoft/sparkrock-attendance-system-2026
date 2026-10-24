@@ -256,3 +256,8 @@ Running log of prompts given to the AI assistant (Claude Code), the assistant's 
 - **Prompt:** "rename implementation-plan.md to 02.implementation-plan.md"
 - **AI suggestion/action:** Renamed the file to match the numbered docs, updated the links in `docs/decisions.md`, and linked it from `CLAUDE.md` and the README.
 - **Decision:** Accepted.
+
+### 40. Compact README
+- **Prompt:** "keep readme.md shorted, make it more compact"
+- **AI suggestion/action:** Cut `README.md` from 84 to about 60 lines. Use cases became a three-line endpoint list, and the doc links and status share one line. The architecture table went from 12 rows to 8 (still with the why). Out-of-scope and open ambiguities are grouped into single rows, and the missing-details table is folded into the ambiguities table. Every AMB and MIS ID still appears.
+- **Decision:** Pending user review.
