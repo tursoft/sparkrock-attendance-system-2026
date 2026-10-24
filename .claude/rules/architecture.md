@@ -32,6 +32,16 @@ Rules:
 - Use the ubiquitous language from the legacy system (student, class, attendance, and so on) in type and member names.
 - One repository per aggregate root. Load and save whole aggregates.
 
+## Mapping
+
+- Use [Mapperly](https://mapperly.riok.app/) (`Riok.Mapperly`) for all object mapping. It generates the mapping code at compile time, so there is no reflection and no runtime cost. Don't use AutoMapper or hand-written mapping boilerplate.
+- One `[Mapper]` `static partial class` per boundary:
+  - Domain ↔ DTO lives in `Application`.
+  - Persistence entity ↔ domain lives in `Infrastructure`.
+- Read queries use Mapperly's `IQueryable` projections, so EF selects only the DTO's columns.
+- Build domain aggregates through their constructors or factory methods so invariants still run. Mapperly maps to constructors; don't bypass invariants with setters.
+- Treat Mapperly's unmapped-member diagnostics as errors (`RMG012`, `RMG020`). Ignore members explicitly when that's intended.
+
 ## Data access
 
 - Database: Microsoft SQL Server.

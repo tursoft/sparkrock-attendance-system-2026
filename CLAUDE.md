@@ -7,7 +7,7 @@ Sparkrock interview challenge: modernize a legacy student attendance system.
 
 ## Rules
 
-- [Architecture](.claude/rules/architecture.md): DDD layers, .NET Minimal API (REST), MSSQL with database-first EF Core, LINQ and atomic transactions, TDD with unit and integration tests, secure by default, global error handling and structured logging, stateless and scalable, DRY but simple; `legacy/` is read-only
+- [Architecture](.claude/rules/architecture.md): DDD layers, .NET Minimal API (REST) with DTOs mapped by Mapperly, MSSQL with database-first EF Core, LINQ and atomic transactions, TDD with unit and integration tests, secure by default, global error handling and structured logging, stateless and scalable, DRY but simple; `legacy/` is read-only
 - [Git workflow](.claude/rules/git.md): auto-commit, never push, Conventional Commits
 - [AI collaboration log](.claude/rules/ai-logs.md): log prompts, suggestions and decisions
 - [Graphify](.claude/rules/graphify.md): use the knowledge graph before searching code

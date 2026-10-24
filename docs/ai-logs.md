@@ -137,3 +137,11 @@ Running log of prompts given to the AI assistant (Claude Code), the assistant's 
 - **Prompt:** "use dtos to exchange data in api, not ef entitites"
 - **AI suggestion/action:** Already covered by the Backend and DDD rules. Made the Backend rule explicit: DTOs only, as immutable records, with no EF entities or domain aggregates crossing the API. Mapping happens in the application layer, and read queries project directly to DTOs.
 - **Decision:** Accepted.
+
+### 21. Mapperly for mapping
+- **Prompt:** "use maperly for mapping"
+- **AI suggestion/action:** Added a Mapping section to `.claude/rules/architecture.md`:
+  - Riok.Mapperly (source-generated) for all mapping, with no AutoMapper or hand-written boilerplate.
+  - One static partial mapper per boundary: Application for domain ↔ DTO, Infrastructure for persistence ↔ domain.
+  - `IQueryable` projections for reads, constructor mapping so domain invariants run, and unmapped-member diagnostics as errors.
+- **Decision:** Accepted.
