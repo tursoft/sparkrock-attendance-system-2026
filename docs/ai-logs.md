@@ -31,3 +31,8 @@ Running log of prompts given to the AI assistant (Claude Code), the assistant's 
 - **Prompt:** "also log my prompts, your suggestions and my decisions in docs\ai-logs.md"
 - **AI suggestion/action:** Created this file, back-filled entries 1–3, and saved logging as a standing rule for future work.
 - **Decision:** Every prompt, suggestion and decision is appended here and committed along with the related work.
+
+### 5. Commit message convention
+- **Prompts:** "use best practices in git commit names, keep them short," and "use prefixes feat, fix, doc etc."
+- **AI suggestion/action:** Adopted Conventional Commits (`type(scope): subject`, imperative, ≤50 chars), using the standard `docs` spelling rather than `doc`. Reworded the three existing unpushed commits to match.
+- **Decision:** Accepted. All future commits use feat/fix/docs/refactor/test/chore/... prefixes with short subjects.
