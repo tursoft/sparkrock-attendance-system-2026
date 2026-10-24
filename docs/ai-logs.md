@@ -345,3 +345,14 @@ Running log of prompts given to the AI assistant (Claude Code), the assistant's 
 - **Prompt:** (tester subagent report on `c514d19`, no user prompt)
 - **AI suggestion/action:** F-1 to F-4 confirmed fixed (96 cases: 92 passed). Applied decision 75 to the running compose database with the same in-place `ALTER` (keeps the data), rebuilt `api` from `9f13723`, and checked that `Café 你好 Ж 😀 €` round-trips. New findings put to the user: N-1 (an unreadable body's 400 has no `errors`/`code`; #70 and #72 disagree), N-2 (binding failures logged at Error by the framework's exception middleware as well as at Warning), N-3 (OpenAPI says `additionalProperties: false` but unknown fields are ignored; the 400 schema omits `code`/`traceId`).
 - **Decision:** Pending.
+
+### 49. Swagger UI demo on the latest version
+- **Prompt:** "demo again with latest version"
+- **AI suggestion/action:**
+  - Rebuilt the `api` container at `9f13723`. The database already had `Notes` as `nvarchar`, so no reset was needed.
+  - Demonstrated the three use cases in Swagger UI through Claude in Chrome on Maple Grove (threshold 10) and recorded `attendance_swagger_demo_latest.gif`:
+    - UC1 `PUT /schools/1/attendance/2026-10-23`: student 3 absent with the note "Fièvre — parent called 📞", student 1 present. 200 OK; student 3 went from 10 to 11 absences with no new alert (one already open), and student 1 stays at 16.
+    - UC2 `GET /students/3/attendance?page=1&pageSize=3`: 16 records, newest first, with the Unicode note returned intact.
+    - UC3 `GET /students/3/absence-summary`: 11 absences, threshold 10, chronically absent.
+  - Observed: Swagger UI now prefills `page`/`pageSize` defaults and enforces `pageSize` ≤ 200 client-side.
+- **Decision:** Accepted.
