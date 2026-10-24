@@ -9,6 +9,13 @@ internal sealed partial class GlobalExceptionHandler(ILogger<GlobalExceptionHand
 {
     public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
     {
+        if (exception is BadHttpRequestException badField && BadRequestErrors.FieldErrors(badField) is { } fieldErrors)
+        {
+            LogRequestRejected(logger, StatusCodes.Status400BadRequest, exception.Message);
+            await ValidationProblems.Create(fieldErrors).ExecuteAsync(httpContext);
+            return true;
+        }
+
         var problem = exception switch
         {
             DomainException => ClientProblem(StatusCodes.Status400BadRequest, exception.Message),

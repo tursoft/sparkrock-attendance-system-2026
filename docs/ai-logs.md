@@ -309,3 +309,29 @@ Running log of prompts given to the AI assistant (Claude Code), the assistant's 
     - UC2 `GET /students/5/attendance`: 7 records for 2026-2027, newest first, starting with the new late mark.
     - UC3 `GET /students/5/absence-summary`: 6 absences, threshold 5, chronically absent.
 - **Decision:** Accepted.
+
+### 45. Tester run
+- **Prompt:** "run test using subagent \"tester\""
+- **AI suggestion/action:** Ran the tester subagent against the already-running stack at commit `f5a0313`. Of 58 cases, 55 passed and 3 failed:
+  - F-1 (critical): `{"entries":[null]}` returns 500 (NullReferenceException) instead of 400. Nothing is persisted.
+  - F-2 (medium): a malformed `date` path value returns 400 without a `traceId`.
+  - F-3 (low): the OpenAPI document leaves out the plan §5 constraints (`date` format, `schoolYear` pattern, paging bounds, 415/500 responses, nullability).
+  - Also flagged: inconsistent problem bodies (F-4), and notes outside Latin-1 silently become `?` (spec gap, needs a decision).
+- **Decision:** Fix the findings (entry 46).
+
+### 46. Fix the tester findings
+- **Prompts:** "fix those reported issues and run test again", "also implement unit and integration tests for those cases"
+- **AI suggestion/action:** Test first (21 new integration tests and 9 unit tests in a new `AttendanceSystem.Api.Tests` project, all red before the fix), then:
+  - F-1: the validation filter reports a `null` item as `entries[i]` (#71).
+  - F-2, F-4: one `ValidationProblems.Create` factory for every 400, with `code` "validation" and a `traceId` (#70); binding failures name the JSON path or parameter (#72).
+  - F-3: OpenAPI parameter annotations, 415/500 responses, non-nullable fields required (#73).
+  - Full suite green (204 tests), then reran the tester subagent against a rebuilt stack.
+- **Decision:** Accepted. The Latin-1 notes question is still open.
+
+### 46. Unit and integration test run
+- **Prompt:** "also execute unittests and integration tests and report"
+- **AI suggestion/action:** Ran `dotnet test AttendanceSystem.sln` at commit `20fd99a`. All 174 tests passed, none skipped:
+  - Domain.Tests: 150
+  - Application.Tests: 2
+  - Api.IntegrationTests: 22, against a Testcontainers SQL Server
+- **Decision:** Pending.

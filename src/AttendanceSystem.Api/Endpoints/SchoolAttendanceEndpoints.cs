@@ -1,4 +1,6 @@
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
+using AttendanceSystem.Api.ErrorHandling;
 using AttendanceSystem.Application.Attendance.SaveDailyAttendance;
 using Microsoft.AspNetCore.Http.HttpResults;
 
@@ -7,6 +9,7 @@ namespace AttendanceSystem.Api.Endpoints;
 public static class SchoolAttendanceEndpoints
 {
     private const string DateFormat = "yyyy-MM-dd";
+    private const string DatePattern = @"^\d{4}-\d{2}-\d{2}$";
 
     public static IEndpointRouteBuilder MapSchoolAttendanceEndpoints(this IEndpointRouteBuilder app)
     {
@@ -18,14 +21,16 @@ public static class SchoolAttendanceEndpoints
             .WithDescription("Records or revises each student's attendance on the date and recalculates their absences for the school year.")
             .WithValidation<SaveDailyAttendanceRequest>()
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .ProducesProblem(StatusCodes.Status409Conflict);
+            .ProducesProblem(StatusCodes.Status409Conflict)
+            .ProducesProblem(StatusCodes.Status415UnsupportedMediaType)
+            .ProducesProblem(StatusCodes.Status500InternalServerError);
 
         return app;
     }
 
-    private static async Task<Results<Ok<SaveDailyAttendanceResponse>, ValidationProblem, ProblemHttpResult>> SaveDailyAttendanceAsync(
+    private static async Task<Results<Ok<SaveDailyAttendanceResponse>, ProblemHttpResult>> SaveDailyAttendanceAsync(
         int schoolId,
-        string date,
+        [DataType(DataType.Date), RegularExpression(DatePattern)] string date,
         SaveDailyAttendanceRequest request,
         SaveDailyAttendanceHandler handler,
         CancellationToken cancellationToken)
@@ -33,7 +38,7 @@ public static class SchoolAttendanceEndpoints
         // Route binding of DateOnly accepts many formats; the contract allows exactly yyyy-MM-dd.
         if (!DateOnly.TryParseExact(date, DateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out var attendDate))
         {
-            return TypedResults.ValidationProblem(new Dictionary<string, string[]>
+            return ValidationProblems.Create(new Dictionary<string, string[]>
             {
                 ["date"] = [$"The date must be a valid calendar date in the format {DateFormat}."],
             });

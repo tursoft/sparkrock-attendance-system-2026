@@ -2,6 +2,7 @@ using System.Collections;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using System.Text.Json;
+using AttendanceSystem.Api.ErrorHandling;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.Extensions.Options;
 
@@ -33,12 +34,7 @@ public sealed class ValidationFilter<TRequest>(IOptions<JsonOptions> jsonOptions
 
         return errors.Count == 0
             ? await next(context)
-            // TypedResults.Problem goes through IProblemDetailsService (adds traceId); ValidationProblem doesn't in .NET 8.
-            : TypedResults.Problem(new HttpValidationProblemDetails(
-                errors.ToDictionary(error => error.Key, error => error.Value.ToArray(), StringComparer.Ordinal))
-            {
-                Status = StatusCodes.Status400BadRequest,
-            });
+            : ValidationProblems.Create(errors.ToDictionary(error => error.Key, error => error.Value.ToArray(), StringComparer.Ordinal));
     }
 
     private void ValidateObject(object instance, string prefix, Dictionary<string, List<string>> errors, HashSet<object> visited)
@@ -84,7 +80,11 @@ public sealed class ValidationFilter<TRequest>(IOptions<JsonOptions> jsonOptions
         var index = 0;
         foreach (var item in items)
         {
-            if (item is not null && IsComplex(item.GetType()))
+            if (item is null)
+            {
+                AddError(errors, $"{path}[{index}]", "The item is required.");
+            }
+            else if (IsComplex(item.GetType()))
             {
                 ValidateObject(item, $"{path}[{index}].", errors, visited);
             }

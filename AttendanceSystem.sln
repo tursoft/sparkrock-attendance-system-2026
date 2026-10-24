@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AttendanceSystem.Applicatio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AttendanceSystem.Domain.Tests", "tests\AttendanceSystem.Domain.Tests\AttendanceSystem.Domain.Tests.csproj", "{255517E5-4414-415D-AE9B-E4C62ECB0D19}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AttendanceSystem.Api.Tests", "tests\AttendanceSystem.Api.Tests\AttendanceSystem.Api.Tests.csproj", "{B4259477-6128-4FAD-9062-4ADE858D1E90}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,6 +60,10 @@ Global
 		{255517E5-4414-415D-AE9B-E4C62ECB0D19}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{255517E5-4414-415D-AE9B-E4C62ECB0D19}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{255517E5-4414-415D-AE9B-E4C62ECB0D19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4259477-6128-4FAD-9062-4ADE858D1E90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4259477-6128-4FAD-9062-4ADE858D1E90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4259477-6128-4FAD-9062-4ADE858D1E90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4259477-6128-4FAD-9062-4ADE858D1E90}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{2F960E7D-9B43-430C-B25B-0D02F2BAC25E} = {140119BD-7CB0-436D-BA13-1A903A6AE312}
@@ -67,5 +73,6 @@ Global
 		{CBCD9591-ADCC-4944-9078-AA092460D22C} = {F8AAD901-225C-4DAB-9DA1-CF19F939E4B4}
 		{8B7BFDA5-B3DD-4203-BF74-44BC167116B3} = {F8AAD901-225C-4DAB-9DA1-CF19F939E4B4}
 		{255517E5-4414-415D-AE9B-E4C62ECB0D19} = {F8AAD901-225C-4DAB-9DA1-CF19F939E4B4}
+		{B4259477-6128-4FAD-9062-4ADE858D1E90} = {F8AAD901-225C-4DAB-9DA1-CF19F939E4B4}
 	EndGlobalSection
 EndGlobal
