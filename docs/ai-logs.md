@@ -74,3 +74,61 @@ Running log of prompts given to the AI assistant (Claude Code), the assistant's 
   - Queries in LINQ, with legacy stored procedure logic ported to LINQ.
   - Async calls, and `AsNoTracking()` for reads.
 - **Decision:** Accepted.
+
+### 13. Domain-driven design
+- **Prompt:** "use domain driven apporach for implementation"
+- **AI suggestion/action:** Added a Domain-driven design section to `.claude/rules/architecture.md`:
+  - Layers: Domain, Application, Infrastructure, Api, with dependencies pointing inward.
+  - To reconcile DDD with database-first, the scaffolded EF classes are treated as persistence models inside Infrastructure only. Repositories map them to separate, behavior-rich domain aggregates.
+  - Updated the data access and testing rules to match.
+- **Decision:** Accepted.
+
+### 14. Test-driven development
+- **Prompt:** "and test driven developmenyt"
+- **AI suggestion/action:** Added TDD to the Testing section of `.claude/rules/architecture.md`: red-green-refactor, and no production code without a failing test first.
+- **Decision:** Accepted.
+
+### 15. Security
+- **Prompt:** "avoid any sql injection or security valunerabilities"
+- **AI suggestion/action:** Added a Security section to `.claude/rules/architecture.md`:
+  - Parameterized EF/LINQ only, with no string-built SQL (`FromSql` rather than `FromSqlRaw` if raw SQL is ever needed).
+  - Boundary validation, and DTO binding to prevent over-posting.
+  - No leaked internals in error responses, and no secrets in source.
+  - HTTPS/HSTS, explicit CORS, authorization by default.
+  - Vulnerable-package checks, and security-focused tests.
+- **Decision:** Accepted.
+
+### 16. Error handling and logging
+- **Prompt:** "add enoug error handling and logging"
+- **AI suggestion/action:** Added an Error handling and logging section to `.claude/rules/architecture.md`:
+  - A global `IExceptionHandler` returns `ProblemDetails` with a `traceId`.
+  - Expected failures are explicit results mapped to 4xx, and domain exceptions are reserved for invariant violations. No silent catches.
+  - Structured `ILogger<T>` logging with correct levels and per-request correlation, keeping secrets and personal data out of logs.
+  - Error-path tests.
+- **Decision:** Accepted.
+
+### 17. Scalability, statelessness, memory
+- **Prompt:** "avoid memory leaks, keep it scalable, stateless"
+- **AI suggestion/action:** Added a Scalability, statelessness and resource use section to `.claude/rules/architecture.md`:
+  - A stateless API that scales horizontally.
+  - Correct DI lifetimes (scoped `DbContext`, no captive dependencies).
+  - Leak prevention: disposal, `IHttpClientFactory`, no unbounded static caches.
+  - Async throughout with `CancellationToken`.
+  - Paginated, projected, N+1-free queries.
+  - Caching only if distributed or bounded, plus health checks.
+- **Decision:** Accepted.
+
+### 18. Code reuse vs. complexity
+- **Prompt:** "reuse codes as much as possible buyt also keep code complexisty low"
+- **AI suggestion/action:** Added a Code reuse and complexity section to `.claude/rules/architecture.md`:
+  - Don't repeat yourself, with shared building blocks (Result type, ProblemDetails mapping, validation filters, pagination, test fixtures).
+  - Balanced with KISS/YAGNI: no speculative abstractions, small methods, low cyclomatic complexity, and duplication over the wrong abstraction.
+- **Decision:** Accepted.
+
+### 19. Atomic transactions
+- **Prompt:** "use atomic transactions for consistency"
+- **AI suggestion/action:** Extended Data access in `.claude/rules/architecture.md`:
+  - Each write use case is atomic: one `SaveChangesAsync` per command, or an explicit transaction across multiple saves.
+  - Optimistic concurrency via `rowversion`, mapped to `409 Conflict`.
+  - Integration tests prove that nothing persists on mid-use-case failure.
+- **Decision:** Accepted.
